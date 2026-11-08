@@ -701,6 +701,12 @@
     <Compile Include="SW_Components\utilities.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="SW_Components\XPT2046\XPT2046_Touchscreen.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SW_Components\XPT2046\XPT2046_Touchscreen.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
@@ -725,6 +731,7 @@
     <Folder Include="SW_Components" />
     <Folder Include="SW_Components\ILI9341" />
     <Folder Include="SW_Components\ILI9341\GFX_Library_SPI" />
+    <Folder Include="SW_Components\XPT2046" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Device_Startup\samd21g18a_flash.ld">
