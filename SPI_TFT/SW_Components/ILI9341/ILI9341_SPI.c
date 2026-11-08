@@ -10,6 +10,11 @@
 #define CMD_RAMWR   0x2Cu
 #define CMD_MADCTL  0x36u
 #define CMD_PIXFMT  0x3Au
+#define CMD_RDDID   0x04u
+#define CMD_RDDST   0x09u
+#define CMD_RDDPM   0x0Au
+#define CMD_RDDMADCTL 0x0Bu
+#define CMD_RDDCOLMOD 0x0Cu
 #define CMD_INVON   0x21u
 #define CMD_INVOFF  0x20u
 
@@ -141,6 +146,51 @@ void ILI9341_SetRotation(uint8_t value)
 void ILI9341_InvertDisplay(bool invert)
 {
     writeCommand(invert ? CMD_INVON : CMD_INVOFF);
+}
+
+bool ILI9341_ReadRegister(uint8_t command, uint8_t *data, uint8_t length)
+{
+    uint8_t i;
+    if (data == 0 || length == 0u)
+        return false;
+
+    ILI9341_PlatformPinWrite(ILI9341_CS_PIN, false);
+    ILI9341_PlatformPinWrite(ILI9341_DC_PIN, false);
+    (void)ILI9341_PlatformSPITransfer(command);
+    ILI9341_PlatformPinWrite(ILI9341_DC_PIN, true);
+
+    /* Read commands return a dummy byte before their first parameter. */
+    (void)ILI9341_PlatformSPITransfer(0x00u);
+    for (i = 0u; i < length; ++i)
+        data[i] = ILI9341_PlatformSPITransfer(0x00u);
+
+    ILI9341_PlatformPinWrite(ILI9341_CS_PIN, true);
+    return true;
+}
+
+bool ILI9341_ReadDisplayId(uint8_t id[3])
+{
+    return ILI9341_ReadRegister(CMD_RDDID, id, 3u);
+}
+
+bool ILI9341_ReadDisplayStatus(uint8_t status[4])
+{
+    return ILI9341_ReadRegister(CMD_RDDST, status, 4u);
+}
+
+bool ILI9341_ReadPowerMode(uint8_t *mode)
+{
+    return ILI9341_ReadRegister(CMD_RDDPM, mode, 1u);
+}
+
+bool ILI9341_ReadMadctl(uint8_t *madctl)
+{
+    return ILI9341_ReadRegister(CMD_RDDMADCTL, madctl, 1u);
+}
+
+bool ILI9341_ReadPixelFormat(uint8_t *format)
+{
+    return ILI9341_ReadRegister(CMD_RDDCOLMOD, format, 1u);
 }
 
 uint16_t ILI9341_GetWidth(void) { return _width; }

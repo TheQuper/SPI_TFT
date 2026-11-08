@@ -45,6 +45,20 @@ void ILI9341_PlatformDelayMs(uint16_t milliseconds);
 void ILI9341_Init(void);
 void ILI9341_SetRotation(uint8_t rotation);
 void ILI9341_InvertDisplay(bool invert);
+
+/*
+ * Read a command/register response over MISO. The generic function clocks
+ * one dummy byte before receiving data. A true result means the arguments
+ * were valid and the transfer was issued; the HAL transfer API does not
+ * expose a separate read-error status through this driver callback.
+ */
+bool ILI9341_ReadRegister(uint8_t command, uint8_t *data, uint8_t length);
+bool ILI9341_ReadDisplayId(uint8_t id[3]);
+bool ILI9341_ReadDisplayStatus(uint8_t status[4]);
+bool ILI9341_ReadPowerMode(uint8_t *mode);
+bool ILI9341_ReadMadctl(uint8_t *madctl);
+bool ILI9341_ReadPixelFormat(uint8_t *format);
+
 uint16_t ILI9341_GetWidth(void);
 uint16_t ILI9341_GetHeight(void);
 

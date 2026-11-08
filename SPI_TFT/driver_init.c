@@ -18,40 +18,9 @@ struct spi_m_sync_descriptor SPI_0;
 void SPI_0_PORT_init(void)
 {
 
-	gpio_set_pin_level(ILI9341_MOSI_PIN,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
-
-	// Set pin direction to output
-	gpio_set_pin_direction(ILI9341_MOSI_PIN, GPIO_DIRECTION_OUT);
-
 	gpio_set_pin_function(ILI9341_MOSI_PIN, PINMUX_PA04D_SERCOM0_PAD0);
 
-	gpio_set_pin_level(ILI9341_SCK_PIN,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
-
-	// Set pin direction to output
-	gpio_set_pin_direction(ILI9341_SCK_PIN, GPIO_DIRECTION_OUT);
-
 	gpio_set_pin_function(ILI9341_SCK_PIN, PINMUX_PA05D_SERCOM0_PAD1);
-
-	// Set pin direction to input
-	gpio_set_pin_direction(ILI9341_MISO_PIN, GPIO_DIRECTION_IN);
-
-	gpio_set_pin_pull_mode(ILI9341_MISO_PIN,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
 
 	gpio_set_pin_function(ILI9341_MISO_PIN, PINMUX_PA06D_SERCOM0_PAD2);
 }
